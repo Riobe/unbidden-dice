@@ -6,8 +6,6 @@ require("dotenv").config();
 const { matchInput } = require('./parser');
 const { challengeRoll, damageRoll, } = require('./roller');
 
-console.log(`Using token ${process.env.DISCORD_TOKEN}`);
-
 client.once('ready', () => {
     console.log('Ready!');
 });
@@ -15,15 +13,33 @@ client.once('ready', () => {
 client.login(process.env.DISCORD_TOKEN);
 
 client.on('ready', () => {
-    console.log(`${client.user.tag} has logged in.`);
-    client.user.setActivity("#help", { type: "LISTENING" });
+  console.log(`${client.user.tag} has logged in.`);
+  client.user.setActivity('!wv', { type: "LISTENING" });
 })
 
 
 client.on('message', message => {
-    if (message.content === "#help") {
-        message.channel.send("Unbidden Dice test?");
-    }
+  const { content } = message;
+  if (content === "!wv" || content === '!vault') {
+      message.channel.send(
+`Welcome to Unbidden Dice, the dice roller for Whispering Vault!
+
+You can use either \`!wv\` or \`!vault\` to use the bot. There are two types of rolls, challenge rolls and damage rolls. Challenge rolls are the default type and you can do one by just including a number of dice after a space after the command. Like so:
+
+\`!wv 5\`
+
+If you want to add a skill just type a \`+\` and the number after that like \`!vault 5 + 2\`. The other type of roll is a damage roll and to do one of those include \`/d\` after the command like this:
+
+\`!wv/d 8\`
+
+You will often have a die cap on a damage roll (Say for ranged weapons, or mortal weapons) and to include that just use a colon (\`:\`) after the dice number and what the die cap is. You can either type the die cap directly like \`8:5\` or put in a negative number to subtract from 6 like \`8:-1\`. Here's an example:
+
+\`!vault 8:-2\`
+
+After any of these commands you can type whatever you want, so you can include a comment about what the roll is for if you want. Enjoy!
+`
+      );
+  }
 });
 
 client.on('message', message => {
