@@ -8,31 +8,33 @@ function matchInput(textInput) {
 
   if (match.groups.dice.length > 2) {
     return {
-      error: 'You cannot roll more than 99 dice'
-    }
+      error: 'You cannot roll more than 99 dice',
+    };
   }
 
   const screwedUp = !!match.groups.screwedUp;
 
-  const type = match.groups.damageModifier || screwedUp
-    ? 'damage'
-    : 'challenge';
+  const type =
+    match.groups.damageModifier || screwedUp ? 'damage' : 'challenge';
 
   if (type === 'challenge' && match.groups.connector === ':') {
     return {
-      error: 'When doing a challenge roll, you can use + to add a skill. : is for specifying a die cap on a damage roll.',
+      error:
+        'When doing a challenge roll, you can use + to add a skill. : is for specifying a die cap on a damage roll.',
     };
   }
 
   if (type === 'damage' && match.groups.connector === '+') {
     return {
-      error: 'When doing a damage roll, you can use : to specify the die cap. + is for adding skill to a challenge roll.',
+      error:
+        'When doing a damage roll, you can use : to specify the die cap. + is for adding skill to a challenge roll.',
     };
   }
 
-  if (!!match.groups.plus) {
+  if (match.groups.plus) {
     return {
-      error: 'You cannot add to the die cap of a damage roll. The dice only has six sides. Remove the + and try again.',
+      error:
+        'You cannot add to the die cap of a damage roll. The dice only has six sides. Remove the + and try again.',
     };
   }
 
@@ -40,7 +42,7 @@ function matchInput(textInput) {
 
   const defaultModifier = type === 'challenge' ? 0 : 6;
   let modifier = parseInt(match.groups.modifier || defaultModifier, 10);
-  if (!!match.groups.negative) {
+  if (match.groups.negative) {
     if (type === 'damage') {
       modifier = 6 - modifier;
     } else {
@@ -50,15 +52,16 @@ function matchInput(textInput) {
 
   if (modifier > 999) {
     return {
-      error: 'Congratulations on your god character, but I\'m not working with numbers that big.'
-    }
+      error:
+        "Congratulations on your god character, but I'm not working with numbers that big.",
+    };
   }
 
   return {
     type,
     dice,
     modifier,
-    screwedUp
+    screwedUp,
   };
 }
 

@@ -11,7 +11,8 @@ describe('roller', () => {
     mathSpy.mockRestore();
   });
 
-  const setRand = value => mathSpy.mockImplementation(() => (1/6) * (value-1));
+  const setRand = value =>
+    mathSpy.mockImplementation(() => (1 / 6) * (value - 1));
 
   describe('challengeRoll', () => {
     it('should return null if given zero dice.', async () => {

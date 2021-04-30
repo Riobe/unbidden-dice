@@ -25,7 +25,7 @@ function challengeRoll(dice, skill = 0) {
     dice: rolls,
     bestFace,
     result: diceResult,
-    total: diceResult + skill
+    total: diceResult + skill,
   };
 }
 

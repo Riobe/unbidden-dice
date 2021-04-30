@@ -17,7 +17,7 @@ describe('parser', () => {
 
       expect(result).toBeDefined();
       expect(result).toMatchObject({
-        type: 'challenge'
+        type: 'challenge',
       });
     });
 
@@ -28,7 +28,7 @@ describe('parser', () => {
 
       expect(result).toBeDefined();
       expect(result).toMatchObject({
-        dice: 6
+        dice: 6,
       });
     });
 
@@ -39,7 +39,7 @@ describe('parser', () => {
 
       expect(result).toBeDefined();
       expect(result).toMatchObject({
-        modifier: 2
+        modifier: 2,
       });
     });
 
@@ -50,7 +50,7 @@ describe('parser', () => {
 
       expect(result).toBeDefined();
       expect(result).toMatchObject({
-        type: 'damage'
+        type: 'damage',
       });
     });
 
@@ -61,7 +61,7 @@ describe('parser', () => {
 
       expect(result).toBeDefined();
       expect(result).toMatchObject({
-        dice: 6
+        dice: 6,
       });
     });
 
@@ -72,7 +72,7 @@ describe('parser', () => {
 
       expect(result).toBeDefined();
       expect(result).toMatchObject({
-        modifier: 2
+        modifier: 2,
       });
     });
 
@@ -85,7 +85,7 @@ describe('parser', () => {
       expect(result).toMatchObject({
         type: 'damage',
         dice: 6,
-        modifier: 2
+        modifier: 2,
       });
     });
 
@@ -98,7 +98,7 @@ describe('parser', () => {
       expect(result).toMatchObject({
         type: 'damage',
         dice: 6,
-        modifier: 4
+        modifier: 4,
       });
     });
 
