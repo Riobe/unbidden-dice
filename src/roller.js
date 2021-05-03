@@ -1,7 +1,8 @@
 'use strict';
 
-const range = length => [...Array(length).keys()];
-const d6 = () => 1 + Math.floor(Math.random() * 6);
+const { range, randomInt } = require('./util');
+
+const d6 = () => randomInt(1,6);
 const roll = dice => range(dice).map(d6).sort();
 
 function challengeRoll(dice, skill = 0) {
@@ -50,6 +51,8 @@ function damageRoll(dice, cap = 6) {
 }
 
 module.exports = {
+  d6,
+  roll,
   challengeRoll,
   damageRoll,
 };

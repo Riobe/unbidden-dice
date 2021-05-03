@@ -1,18 +1,30 @@
+jest.mock('./util', () => {
+  const util = jest.requireActual('./util');
+
+  return {
+    ...util,
+    randomInt: jest.fn(),
+  };
+});
+
 const { challengeRoll, damageRoll } = require('./roller');
+const { range, randomInt } = require('./util');
+const { arrayContaining } = expect;
 
 describe('roller', () => {
-  let mathSpy;
-
   beforeEach(() => {
-    mathSpy = jest.spyOn(global.Math, 'random');
+    randomInt.mockRestore();
   });
 
-  afterEach(() => {
-    mathSpy.mockRestore();
-  });
+  const setupRolls = values => {
+    if (!Array.isArray(values)) {
+      values = [values];
+    }
 
-  const setRand = value =>
-    mathSpy.mockImplementation(() => (1 / 6) * (value - 1));
+    let index = 0;
+
+    randomInt.mockImplementation(() => values[index++]);
+  };
 
   describe('challengeRoll', () => {
     it('should return null if given zero dice.', async () => {
@@ -23,17 +35,26 @@ describe('roller', () => {
       expect(challengeRoll(-1)).toBeNull();
     });
 
-    it('should return a rolls array.', async () => {
-      setRand(5);
+    it.each`
+      rolls                              | expectedResult    | expectedBestFace
+      ${[1,1,1,1,1,1,1,1,1,1,1,1,1,6,6]} | ${13}             | ${1}
+      ${[1,1,1,1,2]}                     | ${4}              | ${1}
+      ${[2,2,2,4,5]}                     | ${6}              | ${2}
+      ${[3,3,3,5,6]}                     | ${9}              | ${3}
+      ${[2,4,4,5,6]}                     | ${8}              | ${4}
+      ${[5,5,5,6,6]}                     | ${15}             | ${5}
+      ${[3,3,3,6,6]}                     | ${12}             | ${6}
+    `('should get (best face: $expectedBestFace | result: $expectedResult) with rolls of $rolls.', async ({ rolls, expectedResult, expectedBestFace }) => {
+      const testSkill = 2;
+      setupRolls(rolls);
 
-      const result = challengeRoll(1);
+      const result = challengeRoll(rolls.length, testSkill);
 
       expect(result).toBeDefined();
-      expect(result).toMatchObject({
-        rolls: [5],
-        bestFace: 5,
-        result: 5,
-      });
+      expect(result.dice).toEqual(arrayContaining(rolls));
+      expect(result.bestFace).toBe(expectedBestFace);
+      expect(result.result).toBe(expectedResult);
+      expect(result.total).toBe(expectedResult + testSkill);
     });
   });
 
