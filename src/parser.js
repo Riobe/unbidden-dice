@@ -14,8 +14,7 @@ function matchInput(textInput) {
 
   const screwedUp = !!match.groups.screwedUp;
 
-  const type =
-    match.groups.damageModifier || screwedUp ? 'damage' : 'challenge';
+  const type = match.groups.damageModifier || screwedUp ? 'damage' : 'challenge';
 
   if (type === 'challenge' && match.groups.connector === ':') {
     return {
@@ -33,8 +32,7 @@ function matchInput(textInput) {
 
   if (match.groups.plus) {
     return {
-      error:
-        'You cannot add to the die cap of a damage roll. The dice only has six sides. Remove the + and try again.',
+      error: 'You cannot add to the die cap of a damage roll. The dice only has six sides. Remove the + and try again.',
     };
   }
 
@@ -52,8 +50,7 @@ function matchInput(textInput) {
 
   if (modifier > 999) {
     return {
-      error:
-        "Congratulations on your god character, but I'm not working with numbers that big.",
+      error: "Congratulations on your god character, but I'm not working with numbers that big.",
     };
   }
 

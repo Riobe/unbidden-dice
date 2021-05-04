@@ -61,9 +61,7 @@ client.on('message', message => {
     const skill = modifier;
     const sign = modifier >= 0 ? '+' : '';
     const roll = challengeRoll(dice, skill);
-    const rollsString = roll.dice
-      .map(die => (die === roll.bestFace ? `**${die}**` : die))
-      .join(',');
+    const rollsString = roll.dice.map(die => (die === roll.bestFace ? `**${die}**` : die)).join(',');
 
     message.reply(
       `Challenge Result: **${roll.total}** *(${roll.result}${sign}${skill})* | Roll: ${rollsString} (**${roll.result}**) | Skill: **${sign}${skill}**`,
@@ -72,15 +70,11 @@ client.on('message', message => {
     const dieCap = modifier;
 
     if (dieCap < 1 || dieCap > 6) {
-      return message.reply(
-        'When doing a damage roll, your die cap *must* be between 1 and 6.',
-      );
+      return message.reply('When doing a damage roll, your die cap *must* be between 1 and 6.');
     }
 
     const roll = damageRoll(dice, dieCap);
-    const rollsString = roll.dice
-      .map(die => (die <= dieCap ? `**${die}**` : `~~${die}~~`))
-      .join(',');
+    const rollsString = roll.dice.map(die => (die <= dieCap ? `**${die}**` : `~~${die}~~`)).join(',');
     const dieCapDifference = roll.beforeCap - roll.total;
 
     message.reply(

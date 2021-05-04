@@ -3,5 +3,5 @@ module.exports = {
   tabWidth: 2,
   trailingComma: 'all',
   arrowParens: 'avoid',
-  jsxBracketSameLine: false,
+  printWidth: 120,
 };
