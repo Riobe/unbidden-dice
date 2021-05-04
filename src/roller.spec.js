@@ -13,7 +13,7 @@ const { arrayContaining } = expect;
 
 describe('roller', () => {
   beforeEach(() => {
-    randomInt.mockRestore();
+    randomInt.mockReset();
   });
 
   const setupRolls = values => {

@@ -48,8 +48,6 @@ function damageRoll(dice, cap = 6) {
 }
 
 module.exports = {
-  d6,
-  roll,
   challengeRoll,
   damageRoll,
 };
