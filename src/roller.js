@@ -2,7 +2,7 @@
 
 const { range, randomInt } = require('./util');
 
-const d6 = () => randomInt(1,6);
+const d6 = () => randomInt(1, 6);
 const roll = dice => range(dice).map(d6).sort();
 
 const DICE_FACES = 6;
@@ -17,10 +17,7 @@ function challengeRoll(dice, skill = 0) {
   rolls.forEach(roll => (totals[roll - 1] += roll));
 
   const { diceResult, bestFace } = totals.reduce(
-    (result, total, index) =>
-      total < result.diceResult
-        ? result
-        : { diceResult: total, bestFace: index + 1 },
+    (result, total, index) => (total < result.diceResult ? result : { diceResult: total, bestFace: index + 1 }),
     { diceResult: 0, bestFace: 0 },
   );
 
@@ -53,8 +50,6 @@ function damageRoll(dice, cap = 6) {
 }
 
 module.exports = {
-  d6,
-  roll,
   challengeRoll,
   damageRoll,
 };
