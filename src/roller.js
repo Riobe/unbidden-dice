@@ -5,13 +5,15 @@ const { range, randomInt } = require('./util');
 const d6 = () => randomInt(1,6);
 const roll = dice => range(dice).map(d6).sort();
 
+const DICE_FACES = 6;
+
 function challengeRoll(dice, skill = 0) {
   if (dice < 1) {
     return null;
   }
 
   const rolls = roll(dice);
-  const totals = range(6).map(() => 0);
+  const totals = range(DICE_FACES).map(() => 0);
   rolls.forEach(roll => (totals[roll - 1] += roll));
 
   const { diceResult, bestFace } = totals.reduce(
